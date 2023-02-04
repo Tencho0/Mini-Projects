@@ -1,14 +1,24 @@
 export const request = async (method, url, data) => {
     try {
+        const user = localStorage.getItem('auth');
+        const auth = JSON.parse(user || '{}');
+
+        let headers = {};
+
+        if (auth.accessToken) {
+            headers['X-Authorization'] = auth.accessToken;
+        }
+
         let buildRequest;
 
         if (method === 'GET') {
-            buildRequest = fetch(url);
-        }else{
+            buildRequest = fetch(url, { headers });
+        } else {
             buildRequest = fetch(url, {
                 method,
                 headers: {
-                    'content-type':'application/json'
+                    ...headers,
+                    'content-type': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
@@ -19,7 +29,7 @@ export const request = async (method, url, data) => {
 
         return result;
     } catch (error) {
-console.log(error);
+        console.log(error);
     }
 }
 

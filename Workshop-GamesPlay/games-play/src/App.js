@@ -8,6 +8,7 @@ import { AuthContext } from './contexts/AuthContext';
 import Header from './components/Header/Header';
 import Home from './components/Home'
 import Login from './components/Login/Login';
+import Logout from './components/Logout/Logout';
 import Register from './components/Register/Register';
 import Create from './components/Create/Create';
 import Catalog from './components/Catalog/Catalog';
@@ -21,7 +22,7 @@ function App() {
 
     const addComment = (gameId, comment) => {
         setGames(state => {
-            const game = state.find(x => x._id == gameId);
+            const game = state.find(x => x._id === gameId);
             const comments = game.comments || [];
             comments.push(comment);
 
@@ -47,6 +48,10 @@ function App() {
         setAuth(authData);
     }
 
+    const userLogout = () => {
+        setAuth({});
+    }
+
     useEffect(() => {
         gameService.getAll()
             .then(result => {
@@ -56,7 +61,7 @@ function App() {
 
 
     return (
-        <AuthContext.Provider value={{ user: auth, userLogin }}>
+        <AuthContext.Provider value={{ user: auth, userLogin, userLogout }}>
             <div id="box">
                 <Header />
 
@@ -64,6 +69,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home games={games} />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/logout" element={<Logout />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/create" element={<Create addGameHandler={addGameHandler} />} />
                         <Route path="/catalog" element={<Catalog games={games} />} />

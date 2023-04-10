@@ -1,3 +1,7 @@
+using Eventmi.Infrastructure.Data;
+using Eventmi.Infrastructure.Data.Common;
+using Microsoft.EntityFrameworkCore;
+
 namespace Eventmi
 {
     public class Program
@@ -8,6 +12,11 @@ namespace Eventmi
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<EventmiDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("EventmiConnection")));
+
+            builder.Services.AddScoped<IRepository, Repository>();
 
             var app = builder.Build();
 

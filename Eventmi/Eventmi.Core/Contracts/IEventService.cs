@@ -12,7 +12,7 @@ namespace Eventmi.Core.Contracts
         /// </summary>
         /// <param name="model">Event data</param>
         /// <returns></returns>
-        Task AddAsync(EventDetailsModel model);
+        Task AddAsync(EventModel model);
 
         /// <summary>
         /// Delete event
@@ -39,6 +39,6 @@ namespace Eventmi.Core.Contracts
         /// </summary>
         /// <param name="id">Event ID</param>
         /// <returns></returns>
-        Task<EventDetailsModel> GetEventAsync(int id);
+        Task<EventModel> GetEventAsync(int id);
     }
 }

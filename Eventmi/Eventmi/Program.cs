@@ -1,3 +1,5 @@
+using Eventmi.Core.Contracts;
+using Eventmi.Core.Services;
 using Eventmi.Infrastructure.Data;
 using Eventmi.Infrastructure.Data.Common;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,7 @@ namespace Eventmi
                 options.UseSqlServer(builder.Configuration.GetConnectionString("EventmiConnection")));
 
             builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
             var app = builder.Build();
 

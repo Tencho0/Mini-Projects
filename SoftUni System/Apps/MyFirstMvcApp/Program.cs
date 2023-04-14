@@ -1,4 +1,5 @@
 ﻿using SoftUniSystem.HTTP;
+using System.Text;
 
 namespace MyFirstMvcApp;
 
@@ -18,24 +19,36 @@ public class Program
 
     static HttpResponse HomePage(HttpRequest request)
     {
+        var responseHtml = $"<h1>Welcome!</h1>{request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value}";
+        var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+        var response = new HttpResponse("text/html", responseBodyBytes);
 
-        throw new NotImplementedException();
+        return response;
     }
 
     static HttpResponse Favicon(HttpRequest request)
     {
-        throw new NotImplementedException();
+        var fileBytes = File.ReadAllBytes("wwwroot/favicon.ico");
+        var response = new HttpResponse("image/vnd.microsoft.icon", fileBytes);
+
+        return response;
     }
 
     static HttpResponse About(HttpRequest request)
     {
+        var responseHtml = $"<h1>About...!</h1>{request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value}";
+        var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+        var response = new HttpResponse("text/html", responseBodyBytes);
 
-        throw new NotImplementedException();
+        return response;
     }
 
     static HttpResponse Login(HttpRequest request)
     {
+        var responseHtml = $"<h1>Login...!</h1>{request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value}";
+        var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+        var response = new HttpResponse("text/html", responseBodyBytes);
 
-        throw new NotImplementedException();
+        return response;
     }
 }

@@ -60,20 +60,25 @@ public class HttpServer : IHttpServer
             var requestAsString = Encoding.UTF8.GetString(data.ToArray());
 
             var request = new HttpRequest(requestAsString);
-            Console.WriteLine(request.Method + " " + request.Path + " " + request.Headers.Count + " headers");
+            Console.WriteLine($"{request.Method} {request.Path} {request.Headers.Count} headers");
 
-            var responseHtml = "<h1>Welcome!</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
-            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+            HttpResponse response;
+            if (this.routeTable.ContainsKey(request.Path))
+            {
+                var action = this.routeTable[request.Path];
+                response = action(request);
+            }
+            else
+            {
+                response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
+            }
 
-            var responseHttp = "HTTP/1.1 200 OK" + HTTPConstants.NewLine +
-                               "Server: SoftUniSystem Server 1.0" + HTTPConstants.NewLine +
-                               "Content-Type: text/html" + HTTPConstants.NewLine +
-                               "Content-Length: " + responseBodyBytes.Length + HTTPConstants.NewLine +
-                               HTTPConstants.NewLine;
-            var responseHeaderBytes = Encoding.UTF8.GetBytes(responseHttp);
+            response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString()) { HttpOnly = true, MaxAge = 60 * 24 * 60 * 60 });
+            response.Headers.Add(new Header("Server", "SoftUniSystem Server 1.0"));
+            var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
 
             await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
-            await stream.WriteAsync(responseBodyBytes, 0, responseBodyBytes.Length);
+            await stream.WriteAsync(response.Body, 0, response.Body.Length);
 
             tcpClient.Close();
         }

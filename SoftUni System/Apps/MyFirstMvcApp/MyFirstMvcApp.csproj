@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SoftUniSystem.HTTP\SoftUniSystem.HTTP.csproj" />
+    <ProjectReference Include="..\..\SoftUniSystem.MxcFramework\SoftUniSystem.MxcFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>

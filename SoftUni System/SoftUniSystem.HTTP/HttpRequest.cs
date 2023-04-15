@@ -47,7 +47,7 @@ public class HttpRequest
 
             foreach (var cookie in cookies)
             {
-                this.Cookies.Add(new Cookie(cookiesAsString));
+                this.Cookies.Add(new Cookie(cookie));
             }
         }
 

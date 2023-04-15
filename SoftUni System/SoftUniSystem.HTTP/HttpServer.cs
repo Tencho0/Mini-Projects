@@ -6,19 +6,11 @@ namespace SoftUniSystem.HTTP;
 
 public class HttpServer : IHttpServer
 {
-    IDictionary<string, Func<HttpRequest, HttpResponse>>
-        routeTable = new Dictionary<string, Func<HttpRequest, HttpResponse>>();
+    List<Route> routeTable;
 
-    public void AddRoute(string path, Func<HttpRequest, HttpResponse> action)
+    public HttpServer(List<Route> routeTable)
     {
-        if (routeTable.ContainsKey(path))
-        {
-            routeTable[path] = action;
-        }
-        else
-        {
-            routeTable.Add(path, action);
-        }
+        this.routeTable = routeTable;
     }
 
     public async Task StartAsync(int port)
@@ -40,11 +32,11 @@ public class HttpServer : IHttpServer
             using NetworkStream stream = tcpClient.GetStream();
             List<byte> data = new List<byte>();
             int position = 0;
-            byte[] buffer = new byte[HTTPConstants.BufferSize];
-
+            byte[] buffer = new byte[HTTPConstants.BufferSize]; 
             while (true)
             {
-                int count = await stream.ReadAsync(buffer, position, buffer.Length);
+                int count =
+                    await stream.ReadAsync(buffer, position, buffer.Length);
                 position += count;
 
                 if (count < buffer.Length)
@@ -54,7 +46,10 @@ public class HttpServer : IHttpServer
                     data.AddRange(partialBuffer);
                     break;
                 }
-                data.AddRange(buffer);
+                else
+                {
+                    data.AddRange(buffer);
+                }
             }
 
             var requestAsString = Encoding.UTF8.GetString(data.ToArray());
@@ -62,16 +57,10 @@ public class HttpServer : IHttpServer
             var request = new HttpRequest(requestAsString);
             Console.WriteLine($"{request.Method} {request.Path} {request.Headers.Count} headers");
 
-            HttpResponse response;
-            if (this.routeTable.ContainsKey(request.Path))
-            {
-                var action = this.routeTable[request.Path];
-                response = action(request);
-            }
-            else
-            {
-                response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
-            }
+            var route = this.routeTable.FirstOrDefault(x => x.Path == request.Path);
+            var response = route != null 
+                ? route.Action(request) 
+                : new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
 
             response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString()) { HttpOnly = true, MaxAge = 60 * 24 * 60 * 60 });
             response.Headers.Add(new Header("Server", "SoftUniSystem Server 1.0"));

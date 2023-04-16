@@ -14,4 +14,9 @@ public class UsersController : Controller
     {
         return this.View();
     }
+
+    public HttpResponse DoLogin(HttpRequest arg)
+    {
+        return this.Redirect("/");
+    }
 }

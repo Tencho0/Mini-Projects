@@ -32,11 +32,10 @@ public class HttpServer : IHttpServer
             using NetworkStream stream = tcpClient.GetStream();
             List<byte> data = new List<byte>();
             int position = 0;
-            byte[] buffer = new byte[HTTPConstants.BufferSize]; 
+            byte[] buffer = new byte[HTTPConstants.BufferSize];
             while (true)
             {
-                int count =
-                    await stream.ReadAsync(buffer, position, buffer.Length);
+                int count = await stream.ReadAsync(buffer, position, buffer.Length);
                 position += count;
 
                 if (count < buffer.Length)
@@ -46,10 +45,7 @@ public class HttpServer : IHttpServer
                     data.AddRange(partialBuffer);
                     break;
                 }
-                else
-                {
-                    data.AddRange(buffer);
-                }
+                data.AddRange(buffer);
             }
 
             var requestAsString = Encoding.UTF8.GetString(data.ToArray());
@@ -57,9 +53,9 @@ public class HttpServer : IHttpServer
             var request = new HttpRequest(requestAsString);
             Console.WriteLine($"{request.Method} {request.Path} {request.Headers.Count} headers");
 
-            var route = this.routeTable.FirstOrDefault(x => x.Path == request.Path);
-            var response = route != null 
-                ? route.Action(request) 
+            var route = this.routeTable.FirstOrDefault(x => string.Compare(x.Path, request.Path, StringComparison.OrdinalIgnoreCase) == 0 && x.Method == request.Method);
+            var response = route != null
+                ? route.Action(request)
                 : new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
 
             response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString()) { HttpOnly = true, MaxAge = 60 * 24 * 60 * 60 });

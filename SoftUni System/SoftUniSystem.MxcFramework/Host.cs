@@ -1,6 +1,6 @@
 ﻿using SoftUniSystem.HTTP;
 
-namespace SoftUniSystem.MxcFramework;
+namespace SoftUniSystem.MvcFramework;
 
 public static class Host
 {

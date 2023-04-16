@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{DB6916E3-2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFirstMvcApp", "Apps\MyFirstMvcApp\MyFirstMvcApp.csproj", "{31FE9EBE-20D2-4CB0-89E2-6F74BBD19811}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftUniSystem.MxcFramework", "SoftUniSystem.MxcFramework\SoftUniSystem.MxcFramework.csproj", "{97CAEF55-9C57-4D57-AF5A-0A7A995B491B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftUniSystem.MvcFramework", "SoftUniSystem.MxcFramework\SoftUniSystem.MvcFramework.csproj", "{97CAEF55-9C57-4D57-AF5A-0A7A995B491B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftUniSystem.MxcFramework.Tests", "SoftUniSystem.MxcFramework.Tests\SoftUniSystem.MxcFramework.Tests.csproj", "{84F3C732-F819-44E2-AFEC-5B59306F9596}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftUniSystem.MvcFramework.Tests", "SoftUniSystem.MxcFramework.Tests\SoftUniSystem.MvcFramework.Tests.csproj", "{84F3C732-F819-44E2-AFEC-5B59306F9596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

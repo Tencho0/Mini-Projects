@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace SoftUniSystem.MxcFramework.ViewEngine;
+namespace SoftUniSystem.MvcFramework.ViewEngine;
 
 public class ErrorView : IView
 {
@@ -13,7 +13,7 @@ public class ErrorView : IView
         this.csharpCode = csharpCode;
     }
 
-    public string GetHtml(object viewModel)
+    public string ExecuteTemplate(object viewModel)
     {
         var html = new StringBuilder();
 

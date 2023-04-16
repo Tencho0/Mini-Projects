@@ -1,37 +1,52 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
+﻿using SoftUniSystem.HTTP;
+using SoftUniSystem.MvcFramework.ViewEngine;
 using SoftUniSystem.HTTP;
+using SoftUniSystem.MvcFramework.ViewEngine;
+using System.Runtime.CompilerServices;
+using System.Text;
 
-namespace SoftUniSystem.MxcFramework;
-
-public abstract class Controller
+namespace SoftUniSystem.MvcFramework
 {
-    public HttpResponse View([CallerMemberName] string? viewPath = null)
+    public abstract class Controller
     {
-        var layout = System.IO.File.ReadAllText("Views/Shared/_Layout.cshtml");
+        private SusViewEngine viewEngine;
 
-        var viewContent = System.IO.File.ReadAllText($"Views/{this.GetType().Name.Replace("Controller", string.Empty)}/{viewPath}.cshtml");
+        public Controller()
+        {
+            this.viewEngine = new SusViewEngine();
+        }
 
-        var responseHtml = layout.Replace("@RenderBody()", viewContent);
+        public HttpResponse View(
+            object viewModel = null,
+            [CallerMemberName] string viewPath = null)
+        {
+            var layout = System.IO.File.ReadAllText("Views/Shared/_Layout.cshtml");
+            layout = layout.Replace("@RenderBody()", "____VIEW_GOES_HERE____");
+            layout = this.viewEngine.GetHtml(layout, viewModel);
 
-        var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
-        var response = new HttpResponse("text/html", responseBodyBytes);
+            var viewContent = System.IO.File.ReadAllText(
+                "Views/" +
+                this.GetType().Name.Replace("Controller", string.Empty) +
+                "/" + viewPath + ".cshtml");
+            viewContent = this.viewEngine.GetHtml(viewContent, viewModel);
 
-        return response;
-    }
+            var responseHtml = layout.Replace("____VIEW_GOES_HERE____", viewContent);
 
-    public HttpResponse File(string filePath, string contentType)
-    {
-        var fileBytes = System.IO.File.ReadAllBytes(filePath);
-        var response = new HttpResponse(contentType, fileBytes);
-
-        return response;
-    }
-
-    public HttpResponse Redirect(string url)
-    {
-        var response = new HttpResponse(HttpStatusCode.Found);
-        response.Headers.Add(new Header("Location", url));
-        return response;
+            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+            var response = new HttpResponse("text/html", responseBodyBytes);
+            return response;
+        }
+        public HttpResponse File(string filePath, string contentType)
+        {
+            var fileBytes = System.IO.File.ReadAllBytes(filePath);
+            var response = new HttpResponse(contentType, fileBytes);
+            return response;
+        }
+        public HttpResponse Redirect(string url)
+        {
+            var response = new HttpResponse(HttpStatusCode.Found);
+            response.Headers.Add(new Header("Location", url));
+            return response;
+        }
     }
 }

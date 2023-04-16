@@ -1,4 +1,4 @@
-﻿namespace SoftUniSystem.MxcFramework.ViewEngine;
+﻿namespace SoftUniSystem.MvcFramework.ViewEngine;
 
 public interface IViewEngine
 {

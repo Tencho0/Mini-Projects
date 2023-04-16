@@ -1,6 +1,6 @@
-﻿namespace SoftUniSystem.MxcFramework.ViewEngine;
+﻿namespace SoftUniSystem.MvcFramework.ViewEngine;
 
 public interface IView
 {
-    string GetHtml(object viewModel);
+    string ExecuteTemplate(object viewModel);
 }

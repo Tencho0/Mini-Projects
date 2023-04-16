@@ -40,7 +40,7 @@ using System;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
-using SUS.MvcFramework.ViewEngine;
+using SoftUniSystem.MvcFramework.ViewEngine;
 namespace ViewNamespace
 {
     public class ViewClass : IView

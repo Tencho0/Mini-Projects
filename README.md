@@ -3,25 +3,19 @@ This repository contains a collection of my mini projects including console game
 
 ## Projects:
    **Console Games**
-      
-      - [Game 1](https://github.com/Tencho0/Mini-Projects/tree/main/Console%20Games/Tetris): Tetris.
+      - [Tetris](https://github.com/Tencho0/Mini-Projects/tree/main/Console%20Games/Tetris)
      
    **Regex filter**
-      
       - [Offerts filter](https://github.com/Tencho0/Mini-Projects/tree/main/ImotBGPropertypurchase)
 
-   **Landing Pages**
-      
-      - [Landing Page ](https://github.com/Tencho0/Mini-Projects/tree/main/Landing-Page)
+   **Landing Pages** 
+      - [Landing Page](https://github.com/Tencho0/Mini-Projects/tree/main/Landing-Page)
 
    **Single Page Applications (SPA)**
-     
      - [GamesPlay](https://github.com/Tencho0/Mini-Projects/tree/main/Workshop-GamesPlay)
-      
-      - [UsersList](https://github.com/Tencho0/Mini-Projects/tree/main/Workshop)
+     - [UsersList](https://github.com/Tencho0/Mini-Projects/tree/main/Workshop)
 
    **Web Projects with C# MVC**
-      
       - [SoftUniSystem](https://github.com/Tencho0/Mini-Projects/tree/main/SoftUni%20System)
       - [Eventmi](https://github.com/Tencho0/Mini-Projects/tree/main/Eventmi)
 

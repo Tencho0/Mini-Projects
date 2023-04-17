@@ -53,7 +53,7 @@ public static class Host
                 {
                     var instance = Activator.CreateInstance(controllerType) as Controller;
                     instance.Request = request;
-                    var response = method.Invoke(instance) as HttpResponse;
+                    var response = method.Invoke(instance, new object[] {}) as HttpResponse;
                     return response;
                 }));
             }

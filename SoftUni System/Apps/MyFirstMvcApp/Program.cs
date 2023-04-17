@@ -1,6 +1,6 @@
 ﻿using SoftUniSystem.MvcFramework;   
 
-namespace MyFirstMvcApp;
+namespace BattleCards;
 
 public class Program
 {

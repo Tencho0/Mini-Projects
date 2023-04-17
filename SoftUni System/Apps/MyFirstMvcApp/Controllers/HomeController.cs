@@ -1,8 +1,8 @@
-﻿using MyFirstMvcApp.ViewModels;
+﻿using BattleCards.ViewModels;
 using SoftUniSystem.HTTP;
 using SoftUniSystem.MvcFramework;
 
-namespace MyFirstMvcApp.Controllers;
+namespace BattleCards.Controllers;
 
 public class HomeController : Controller
 {

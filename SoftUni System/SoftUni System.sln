@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftUniSystem.HTTP", "SoftU
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{DB6916E3-2828-4E2D-949E-11FA7B5EB57B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFirstMvcApp", "Apps\MyFirstMvcApp\MyFirstMvcApp.csproj", "{31FE9EBE-20D2-4CB0-89E2-6F74BBD19811}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleCards", "Apps\MyFirstMvcApp\BattleCards.csproj", "{31FE9EBE-20D2-4CB0-89E2-6F74BBD19811}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftUniSystem.MvcFramework", "SoftUniSystem.MxcFramework\SoftUniSystem.MvcFramework.csproj", "{97CAEF55-9C57-4D57-AF5A-0A7A995B491B}"
 EndProject

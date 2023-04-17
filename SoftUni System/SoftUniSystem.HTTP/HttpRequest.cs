@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 
 namespace SoftUniSystem.HTTP;
 
@@ -8,6 +9,7 @@ public class HttpRequest
     {
         this.Headers = new List<Header>();
         this.Cookies = new List<Cookie>();
+        this.FormData = new Dictionary<string, string>();
 
         var lines = requestString.Split(new string[] { HTTPConstants.NewLine }, StringSplitOptions.None);
 
@@ -52,6 +54,17 @@ public class HttpRequest
         }
 
         this.Body = bodyBuilder.ToString();
+        var parameters = this.Body.Split(new char[] {'&'}, StringSplitOptions.RemoveEmptyEntries);
+        foreach (var parameter in parameters)
+        {
+            var parameterParts = parameter.Split('=');
+            var name = parameterParts[0];
+            var value = WebUtility.UrlDecode(parameterParts[1]);
+            if (!this.FormData.ContainsKey(name))
+            {
+                this.FormData.Add(name, value);
+            }
+        }
     }
 
     public string Path { get; set; }
@@ -61,6 +74,8 @@ public class HttpRequest
     public List<Header> Headers { get; set; }
 
     public List<Cookie> Cookies { get; set; }
+
+    public IDictionary<string, string> FormData { get; set; }
 
     public string Body { get; set; }
 }

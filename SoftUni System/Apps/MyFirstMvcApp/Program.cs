@@ -1,7 +1,4 @@
-﻿using SoftUniSystem.HTTP;
-using MyFirstMvcApp.Controllers;
-using SoftUniSystem.MvcFramework;   
-using Route = SoftUniSystem.HTTP.Route;
+﻿using SoftUniSystem.MvcFramework;   
 
 namespace MyFirstMvcApp;
 

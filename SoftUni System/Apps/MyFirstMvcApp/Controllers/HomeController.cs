@@ -1,5 +1,4 @@
-﻿using BattleCards.ViewModels;
-using SoftUniSystem.HTTP;
+﻿using SoftUniSystem.HTTP;
 using SoftUniSystem.MvcFramework;
 
 namespace BattleCards.Controllers;
@@ -14,11 +13,6 @@ public class HomeController : Controller
             return this.Redirect("/Cards/All");
         }
 
-        return this.View();
-    }
-
-    public HttpResponse About()
-    {
         return this.View();
     }
 }

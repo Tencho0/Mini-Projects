@@ -74,7 +74,7 @@ public class HttpRequest
             this.Session = Sessions[sessionCookie.Value];
         }
 
-        this.Body = bodyBuilder.ToString();
+        this.Body = bodyBuilder.ToString().TrimEnd('\n','\r');
         var parameters = this.Body.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (var parameter in parameters)
         {

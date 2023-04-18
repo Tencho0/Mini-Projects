@@ -9,12 +9,22 @@ public class CardsController : Controller
 {
     public HttpResponse Add()
     {
+        if (!this.IsUserSignedIn())
+        {
+            return this.Redirect("/Users/Login");
+        }   
+
         return this.View();
     }
 
     [HttpPost("/Cards/Add")]
     public HttpResponse DoAdd()
     {
+        if (!this.IsUserSignedIn())
+        {
+            return this.Redirect("/Users/Login");
+        }
+
         var dbContext = new ApplicationDbContext();
 
         if (this.Request.FormData["name"].Length < 5)
@@ -33,11 +43,16 @@ public class CardsController : Controller
         });
 
         dbContext.SaveChanges();
-        return this.View();
+        return this.Redirect("/Cards/All");
     }
 
     public HttpResponse All()
     {
+        if (!this.IsUserSignedIn())
+        {
+            return this.Redirect("/Users/Login");
+        }
+
         var db = new ApplicationDbContext();
         var cardViewModel = db.Cards.Select(x => new CardViewModel()
         {
@@ -54,6 +69,11 @@ public class CardsController : Controller
 
     public HttpResponse Collection()
     {
+        if (!this.IsUserSignedIn())
+        {
+            return this.Redirect("/Users/Login");
+        }
+
         return this.View();
     }
 }

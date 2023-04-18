@@ -5,7 +5,7 @@ namespace SoftUniSystem.HTTP;
 
 public class HttpRequest
 {
-    public static IDictionary<string, Dictionary<string, string>> 
+    public static IDictionary<string, Dictionary<string, string>>
         Sessions = new Dictionary<string, Dictionary<string, string>>();
 
     public HttpRequest(string requestString)
@@ -75,10 +75,10 @@ public class HttpRequest
         }
 
         this.Body = bodyBuilder.ToString();
-        var parameters = this.Body.Split(new char[] {'&'}, StringSplitOptions.RemoveEmptyEntries);
+        var parameters = this.Body.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (var parameter in parameters)
         {
-            var parameterParts = parameter.Split('=');
+            var parameterParts = parameter.Split(new[] { '=' }, 2);
             var name = parameterParts[0];
             var value = WebUtility.UrlDecode(parameterParts[1]);
             if (!this.FormData.ContainsKey(name))

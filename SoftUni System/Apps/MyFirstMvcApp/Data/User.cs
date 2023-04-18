@@ -3,11 +3,12 @@ using SoftUniSystem.MvcFramework;
 
 namespace BattleCards.Data;
 
-public class User: UserIdentity
+public class User: IdentityUser<string>
 {
 	public User()
     {
         this.Cards = new HashSet<UserCard>();
+        this.Role = IdentityRole.User;
         this.Id = Guid.NewGuid().ToString();
 	}
 

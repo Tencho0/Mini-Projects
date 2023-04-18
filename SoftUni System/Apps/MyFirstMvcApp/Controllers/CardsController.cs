@@ -17,7 +17,7 @@ public class CardsController : Controller
     {
         var dbContext = new ApplicationDbContext();
 
-        if (this.Request.FormData["name"].Length < 5 )
+        if (this.Request.FormData["name"].Length < 5)
         {
             return this.Error("Name should be at least 5 characters long!");
         }
@@ -49,7 +49,7 @@ public class CardsController : Controller
             Type = x.Keyword
         }).ToList();
 
-        return this.View(new AllCardsViewModel { Cards = cardViewModel });
+        return this.View(cardViewModel);
     }
 
     public HttpResponse Collection()

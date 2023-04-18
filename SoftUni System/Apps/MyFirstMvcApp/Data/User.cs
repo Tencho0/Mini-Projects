@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SoftUniSystem.MvcFramework;
 
 namespace BattleCards.Data;
 
-public class User
+public class User: UserIdentity
 {
 	public User()
     {
@@ -10,17 +11,5 @@ public class User
         this.Id = Guid.NewGuid().ToString();
 	}
 
-    public string Id { get; set; }
-
-	[Required]
-	[MaxLength(20)]
-	public string Username { get; set; }
-
-	[Required]
-	public string Email { get; set; }
-
-    [Required]
-    public string Password { get; set; }
-
-	public virtual ICollection<UserCard> Cards { get; set; }
+    public virtual ICollection<UserCard> Cards { get; set; }
 }

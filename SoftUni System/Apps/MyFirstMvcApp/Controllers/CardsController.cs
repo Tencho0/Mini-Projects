@@ -1,5 +1,5 @@
 ﻿using BattleCards.Data;
-using BattleCards.ViewModels;
+using BattleCards.ViewModels.Cards;
 using SoftUniSystem.HTTP;
 using SoftUniSystem.MvcFramework;
 
@@ -25,7 +25,7 @@ public class CardsController : Controller
     }
 
     [HttpPost("/Cards/Add")]
-    public HttpResponse DoAdd(string attack, string health, string description, string name, string imageUrl, string keyword)
+    public HttpResponse DoAdd(AddCardInputModel model)
     {
         if (!this.IsUserSignedIn())
         {
@@ -39,12 +39,12 @@ public class CardsController : Controller
 
         db.Cards.Add(new Card
         {
-            Attack = int.Parse(attack),
-            Health = int.Parse(health),
-            Description = description,
-            Name = name,
-            ImageUrl = imageUrl,
-            Keyword = keyword
+            Attack = model.Attack,
+            Health = model.Health,
+            Description = model.Description,
+            Name = model.Name,
+            ImageUrl = model.ImageUrl,
+            Keyword = model.Keyword
         });
 
         db.SaveChanges();

@@ -25,7 +25,7 @@ public class CardsController : Controller
     }
 
     [HttpPost("/Cards/Add")]
-    public HttpResponse DoAdd()
+    public HttpResponse DoAdd(string attack, string health, string description, string name, string imageUrl, string keyword)
     {
         if (!this.IsUserSignedIn())
         {
@@ -39,12 +39,12 @@ public class CardsController : Controller
 
         db.Cards.Add(new Card
         {
-            Attack = int.Parse(this.Request.FormData["attack"]),
-            Health = int.Parse(this.Request.FormData["health"]),
-            Description = this.Request.FormData["description"],
-            Name = this.Request.FormData["name"],
-            ImageUrl = this.Request.FormData["image"],
-            Keyword = this.Request.FormData["keyword"]
+            Attack = int.Parse(attack),
+            Health = int.Parse(health),
+            Description = description,
+            Name = name,
+            ImageUrl = imageUrl,
+            Keyword = keyword
         });
 
         db.SaveChanges();

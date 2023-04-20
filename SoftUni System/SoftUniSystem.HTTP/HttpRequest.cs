@@ -15,7 +15,8 @@ public class HttpRequest
         this.FormData = new Dictionary<string, string>();
         this.QueryData = new Dictionary<string, string>();
 
-        var lines = requestString.Split(new string[] { HTTPConstants.NewLine }, StringSplitOptions.None);
+        var lines = requestString.Split(new string[] { HTTPConstants.NewLine },
+            StringSplitOptions.None);
 
         var headerLine = lines[0];
         var headerLineParts = headerLine.Split(' ');
@@ -48,12 +49,13 @@ public class HttpRequest
 
         if (this.Headers.Any(x => x.Name == HTTPConstants.RequestCookieHeader))
         {
-            var cookiesAsString = this.Headers.FirstOrDefault(x => x.Name == HTTPConstants.RequestCookieHeader).Value;
-            var cookies = cookiesAsString.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var cookie in cookies)
+            var cookiesAsString = this.Headers.FirstOrDefault(x =>
+                x.Name == HTTPConstants.RequestCookieHeader).Value;
+            var cookies = cookiesAsString.Split(new string[] { "; " },
+                StringSplitOptions.RemoveEmptyEntries);
+            foreach (var cookieAsString in cookies)
             {
-                this.Cookies.Add(new Cookie(cookie));
+                this.Cookies.Add(new Cookie(cookieAsString));
             }
         }
 
@@ -87,12 +89,14 @@ public class HttpRequest
         }
 
         this.Body = bodyBuilder.ToString().TrimEnd('\n', '\r');
+
         SplitParameters(this.Body, this.FormData);
-        SplitParameters(this.Body, this.QueryData);
+        SplitParameters(this.QueryString, this.QueryData);
     }
 
-    private void SplitParameters(string parametersAsString, IDictionary<string, string> output)
+    private static void SplitParameters(string parametersAsString, IDictionary<string, string> output)
     {
+
         var parameters = parametersAsString.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (var parameter in parameters)
         {

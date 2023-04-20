@@ -15,9 +15,9 @@ public class HttpServer : IHttpServer
 
     public async Task StartAsync(int port)
     {
-        TcpListener tcpListener = new TcpListener(IPAddress.Loopback, port);
+        TcpListener tcpListener =
+            new TcpListener(IPAddress.Loopback, port);
         tcpListener.Start();
-
         while (true)
         {
             TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
@@ -29,51 +29,58 @@ public class HttpServer : IHttpServer
     {
         try
         {
-            using NetworkStream stream = tcpClient.GetStream();
-            List<byte> data = new List<byte>();
-            int position = 0;
-            byte[] buffer = new byte[HTTPConstants.BufferSize];
-            while (true)
+            using (NetworkStream stream = tcpClient.GetStream())
             {
-                int count = await stream.ReadAsync(buffer, position, buffer.Length);
-                position += count;
-
-                if (count < buffer.Length)
+                List<byte> data = new List<byte>();
+                int position = 0;
+                byte[] buffer = new byte[HTTPConstants.BufferSize]; // chunk
+                while (true)
                 {
-                    var partialBuffer = new byte[count];
-                    Array.Copy(buffer, partialBuffer, count);
-                    data.AddRange(partialBuffer);
-                    break;
+                    int count =
+                        await stream.ReadAsync(buffer, position, buffer.Length);
+                    position += count;
+
+                    if (count < buffer.Length)
+                    {
+                        var partialBuffer = new byte[count];
+                        Array.Copy(buffer, partialBuffer, count);
+                        data.AddRange(partialBuffer);
+                        break;
+                    }
+                    data.AddRange(buffer);
                 }
-                data.AddRange(buffer);
-            }
 
-            var requestAsString = Encoding.UTF8.GetString(data.ToArray());
+                var requestAsString = Encoding.UTF8.GetString(data.ToArray());
+                var request = new HttpRequest(requestAsString);
 
-            var request = new HttpRequest(requestAsString);
-            Console.WriteLine($"{request.Method} {request.Path} {request.Headers.Count} headers");
+                HttpResponse response;
+                var route = this.routeTable.FirstOrDefault(x => string.Compare(x.Path, request.Path, true) == 0 && x.Method == request.Method);
+                if (route != null)
+                {
+                    response = route.Action(request);
+                }
+                else
+                {
+                    response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
+                }
 
-            var route = this.routeTable.FirstOrDefault(x => string.Compare(x.Path, request.Path, StringComparison.OrdinalIgnoreCase) == 0 && x.Method == request.Method);
-            var response = route != null
-                ? route.Action(request)
-                : new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
+                response.Headers.Add(new Header("Server", "SUS Server 1.0"));
 
-            response.Headers.Add(new Header("Server", "SoftUniSystem Server 1.0"));
-            var sessionCookie = request.Cookies.FirstOrDefault(x => x.Name == HTTPConstants.SessionCookieName);
-            if (sessionCookie != null)
-            {
-                var responseSessionCookie = new ResponseCookie(sessionCookie.Name, sessionCookie.Value);
-                responseSessionCookie.Path = "/";
-                response.Cookies.Add(responseSessionCookie);
-            }
+                var sessionCookie = request.Cookies.FirstOrDefault(x => x.Name == HTTPConstants.SessionCookieName);
+                if (sessionCookie != null)
+                {
+                    var responseSessionCookie = new ResponseCookie(sessionCookie.Name, sessionCookie.Value);
+                    responseSessionCookie.Path = "/";
+                    response.Cookies.Add(responseSessionCookie);
+                }
 
-            var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
+                var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
+                await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
 
-            await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
-
-            if (response.Body != null)
-            {
-                await stream.WriteAsync(response.Body, 0, response.Body.Length);
+                if (response.Body != null)
+                {
+                    await stream.WriteAsync(response.Body, 0, response.Body.Length);
+                }
             }
 
             tcpClient.Close();

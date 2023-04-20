@@ -27,7 +27,6 @@ public class ServiceCollection : IServiceCollection
         }
 
         var obj = constructor.Invoke(parameterValues.ToArray());
-
         return obj;
     }
 }

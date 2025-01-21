@@ -11,6 +11,7 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
 var _Employee_id;
+Object.defineProperty(exports, "__esModule", { value: true });
 class Employee {
     get empId() {
         return __classPrivateFieldGet(this, _Employee_id, "f");
@@ -28,6 +29,9 @@ class Employee {
         // this.id = id;
         this.name = name;
         this.address = address;
+    }
+    Login() {
+        return { name: 'John', id: 1, email: '' };
     }
     getNameWithAddress() {
         return `${this.name} stays at ${this.address}`;

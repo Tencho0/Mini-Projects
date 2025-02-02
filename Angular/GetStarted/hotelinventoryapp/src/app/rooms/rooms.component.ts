@@ -28,7 +28,8 @@ export class RoomsComponent {
       price: 500,
       photos: 'https://image/1.com',
       chekInTime: new Date('11-Nov-2021'),
-      chekOutTime: new Date('12-Nov-2021')
+      chekOutTime: new Date('12-Nov-2021'),
+      rating: 4.5
     },
     {
       roomNumber: 2,
@@ -37,7 +38,8 @@ export class RoomsComponent {
       price: 1500,
       photos: 'https://image/2.com',
       chekInTime: new Date('11-Nov-2021'),
-      chekOutTime: new Date('12-Nov-2021')
+      chekOutTime: new Date('12-Nov-2021'),
+      rating: 5.5
     },
     {
       roomNumber: 3,
@@ -46,7 +48,8 @@ export class RoomsComponent {
       price: 4500,
       photos: 'https://image.com',
       chekInTime: new Date('11-Nov-2021'),
-      chekOutTime: new Date('12-Nov-2021')
+      chekOutTime: new Date('12-Nov-2021'),
+      rating: 7.2
     }
   ];
 

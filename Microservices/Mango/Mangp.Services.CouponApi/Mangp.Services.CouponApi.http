@@ -1,0 +1,6 @@
+@Mangp.Services.CouponApi_HostAddress = http://localhost:5138
+
+GET {{Mangp.Services.CouponApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

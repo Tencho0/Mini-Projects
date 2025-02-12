@@ -1,5 +1,6 @@
 ﻿namespace Mangp.Services.CouponApi.Controllers
 {
+    using AutoMapper;
     using Mangp.Services.CouponApi.Data;
     using Mangp.Services.CouponApi.Models;
     using Mangp.Services.CouponApi.Models.Dto;
@@ -11,10 +12,12 @@
     {
         private readonly AppDbContext _db;
         private ResponseDto _response;
+        private IMapper _mapper;
 
-        public CouponApiController(AppDbContext db)
+        public CouponApiController(AppDbContext db, IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
             _response = new ResponseDto();
         }
 
@@ -24,7 +27,7 @@
             try
             {
                 IEnumerable<Coupon> objList = _db.Coupons.ToList();
-                _response.Result = objList;
+                _response.Result = _mapper.Map<IEnumerable<CouponDto>>(objList);
             }
             catch (Exception ex)
             {
@@ -43,7 +46,7 @@
             try
             {
                 Coupon obj = _db.Coupons.First(u => u.CouponId == id);
-                _response.Result = obj;
+                _response.Result = _mapper.Map<CouponDto>(obj);
             }
             catch (Exception ex)
             {

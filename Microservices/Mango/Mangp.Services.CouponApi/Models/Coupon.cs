@@ -1,4 +1,4 @@
-﻿namespace Mangp.Services.CouponApi.Models
+﻿namespace Mango.Services.CouponApi.Models
 {
     using System.ComponentModel.DataAnnotations;
 

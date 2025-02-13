@@ -1,6 +1,6 @@
-﻿namespace Mangp.Services.CouponApi.Data
+﻿namespace Mango.Services.CouponApi.Data
 {
-    using Mangp.Services.CouponApi.Models;
+    using Mango.Services.CouponApi.Models;
     using Microsoft.EntityFrameworkCore;
 
     public class AppDbContext : DbContext

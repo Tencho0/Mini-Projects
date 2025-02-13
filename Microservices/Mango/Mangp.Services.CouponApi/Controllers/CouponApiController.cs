@@ -1,12 +1,12 @@
-﻿namespace Mangp.Services.CouponApi.Controllers
+﻿namespace Mango.Services.CouponApi.Controllers
 {
     using AutoMapper;
-    using Mangp.Services.CouponApi.Data;
-    using Mangp.Services.CouponApi.Models;
-    using Mangp.Services.CouponApi.Models.Dto;
+    using Mango.Services.CouponApi.Data;
+    using Mango.Services.CouponApi.Models;
+    using Mango.Services.CouponApi.Models.Dto;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/[controller]")]
+    [Route("api/coupon")]
     [ApiController]
     public class CouponApiController : ControllerBase
     {

@@ -1,8 +1,8 @@
-﻿namespace Mangp.Services.CouponApi
+﻿namespace Mango.Services.CouponApi
 {
     using AutoMapper;
-    using Mangp.Services.CouponApi.Models;
-    using Mangp.Services.CouponApi.Models.Dto;
+    using Mango.Services.CouponApi.Models;
+    using Mango.Services.CouponApi.Models.Dto;
 
     public class MappingConfig
     {

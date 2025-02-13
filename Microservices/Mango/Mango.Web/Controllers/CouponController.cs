@@ -1,5 +1,6 @@
 ﻿namespace Mango.Web.Controllers
 {
+    using System.Collections.Generic;
     using Mango.Web.Models;
     using Mango.Web.Service.IService;
     using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,27 @@
             }
 
             return View(list);
+        }
+
+        public async Task<IActionResult> CouponCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CouponCreate(CouponDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                ResponseDto? response = await _couponService.CreateCouponAsync(model);
+
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(CouponIndex));
+                }
+            }
+
+            return View(model);
         }
     }
 }

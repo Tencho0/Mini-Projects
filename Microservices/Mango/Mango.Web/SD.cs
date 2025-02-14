@@ -8,6 +8,7 @@
 
         public const string RoleAdmin = "ADMIN";
         public const string RoleCustomer = "CUSTOMER";
+        public const string TokenCoockie = "JWTToken";
 
         public enum ApiType
         {

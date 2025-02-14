@@ -1,22 +1,22 @@
-﻿namespace Mango.Services.CouponApi.Controllers
+﻿namespace Mango.Services.ProductApi.Controllers
 {
     using AutoMapper;
-    using Mango.Services.CouponApi.Data;
-    using Mango.Services.CouponApi.Models;
-    using Mango.Services.CouponApi.Models.Dto;
+    using Mango.Services.ProductApi.Data;
+    using Mango.Services.ProductApi.Models;
+    using Mango.Services.ProductApi.Models.Dto;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/coupon")]
+    [Route("api/product")]
     [ApiController]
     [Authorize]
-    public class CouponApiController : ControllerBase
+    public class ProductApiController : ControllerBase
     {
         private readonly AppDbContext _db;
         private ResponseDto _response;
         private IMapper _mapper;
 
-        public CouponApiController(AppDbContext db, IMapper mapper)
+        public ProductApiController(AppDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
@@ -28,8 +28,8 @@
         {
             try
             {
-                IEnumerable<Coupon> objList = _db.Coupons.ToList();
-                _response.Result = _mapper.Map<IEnumerable<CouponDto>>(objList);
+                IEnumerable<Product> objList = _db.Products.ToList();
+                _response.Result = _mapper.Map<IEnumerable<ProductDto>>(objList);
             }
             catch (Exception ex)
             {
@@ -47,27 +47,8 @@
         {
             try
             {
-                Coupon obj = _db.Coupons.First(u => u.CouponId == id);
-                _response.Result = _mapper.Map<CouponDto>(obj);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
-
-            return _response;
-        }
-
-        [HttpGet]
-        [Route("GetByCode/{code}")]
-        public ResponseDto GetByCode(string code)
-        {
-            try
-            {
-                Coupon obj = _db.Coupons.First(u => u.CouponCode == code);
-
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                Product obj = _db.Products.First(u => u.ProductId == id);
+                _response.Result = _mapper.Map<ProductDto>(obj);
             }
             catch (Exception ex)
             {
@@ -80,15 +61,15 @@
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ResponseDto Post([FromBody] CouponDto couponDto)
+        public ResponseDto Post([FromBody] ProductDto ProductDto)
         {
             try
             {
-                Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Add(obj);
+                Product obj = _mapper.Map<Product>(ProductDto);
+                _db.Products.Add(obj);
                 _db.SaveChanges();
 
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                _response.Result = _mapper.Map<ProductDto>(obj);
             }
             catch (Exception ex)
             {
@@ -101,15 +82,15 @@
 
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        public ResponseDto Put([FromBody] CouponDto couponDto)
+        public ResponseDto Put([FromBody] ProductDto ProductDto)
         {
             try
             {
-                Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Update(obj);
+                Product obj = _mapper.Map<Product>(ProductDto);
+                _db.Products.Update(obj);
                 _db.SaveChanges();
 
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                _response.Result = _mapper.Map<ProductDto>(obj);
             }
             catch (Exception ex)
             {
@@ -127,8 +108,8 @@
         {
             try
             {
-                Coupon obj = _db.Coupons.First(u => u.CouponId == id);
-                _db.Coupons.Remove(obj);
+                Product obj = _db.Products.First(u => u.ProductId == id);
+                _db.Products.Remove(obj);
                 _db.SaveChanges();
             }
             catch (Exception ex)

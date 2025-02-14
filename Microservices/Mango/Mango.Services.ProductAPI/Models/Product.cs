@@ -1,4 +1,4 @@
-﻿namespace Mango.Services.ProductAPI.Models
+﻿namespace Mango.Services.ProductApi.Models
 {
     using System.ComponentModel.DataAnnotations;
 

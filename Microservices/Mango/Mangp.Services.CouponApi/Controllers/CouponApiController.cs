@@ -4,10 +4,12 @@
     using Mango.Services.CouponApi.Data;
     using Mango.Services.CouponApi.Models;
     using Mango.Services.CouponApi.Models.Dto;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/coupon")]
     [ApiController]
+    [Authorize]
     public class CouponApiController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -77,6 +79,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ResponseDto Post([FromBody] CouponDto couponDto)
         {
             try

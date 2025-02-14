@@ -42,10 +42,11 @@
                 _tokenProvider.SetToken(loginResponseDto.Token);
                 return RedirectToAction("Index", "Home");
             }
+
             else
             {
-                ModelState.AddModelError("CustomError", responseDto.Message);
-                return View();
+                TempData["error"] = responseDto.Message;
+                return View(obj);
             }
         }
 

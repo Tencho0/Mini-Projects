@@ -9,7 +9,7 @@
         {
         }
 
-        public DbSet<OrderHeader> CartHeaders { get; set; }
-        public DbSet<OrderDetails> CartDetails { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Mango.MessageBus;
 using Mango.Services.OrderApi;
 using Mango.Services.OrderApi.Data;
 using Mango.Services.OrderApi.Extensions;
@@ -25,13 +26,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<BackendApiAuthenticationHttpClientHandler>();
 
-//TODO: Add message bus
+builder.Services.AddScoped<IMessageBus, MessageBus>();
 
 builder.Services
     .AddHttpClient("Product", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ProductAPI"]))
-    .AddHttpMessageHandler<BackendApiAuthenticationHttpClientHandler>();
-builder.Services
-    .AddHttpClient("Coupon", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CouponAPI"]))
     .AddHttpMessageHandler<BackendApiAuthenticationHttpClientHandler>();
 
 builder.Services.AddControllers();

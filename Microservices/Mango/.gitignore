@@ -1,0 +1,7 @@
+# Ignore appsettings.json to prevent secrets from being committed
+Mango.Services.EmailApi/appsettings.json
+
+# Ignore compiled files
+bin/
+obj/
+*.dll

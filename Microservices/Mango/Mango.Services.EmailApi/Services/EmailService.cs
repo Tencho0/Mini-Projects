@@ -35,6 +35,12 @@
             await LogAndEmail(message.ToString(), cartDto.CartHeader.Email);
         }
 
+        public async Task RegisterUserEmailAndLog(string email)
+        {
+            string message = $"User Registeration Successfull. <br/> Email : {email}";
+            await LogAndEmail(message, "tencho101104@gmail.com");
+        }
+
         private async Task<bool> LogAndEmail(string message, string email)
         {
             try

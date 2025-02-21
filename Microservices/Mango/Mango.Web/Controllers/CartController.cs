@@ -36,7 +36,7 @@
         {
             CartDto cart = await LoadCartDtoBasedOnLoggedInUser();
             cart.CartHeader.Phone = cartDto.CartHeader.Phone;
-            cart.CartHeader.Email= cartDto.CartHeader.Email;
+            cart.CartHeader.Email = cartDto.CartHeader.Email;
             cart.CartHeader.Name = cartDto.CartHeader.Name;
 
             var response = await _orderService.CreateOrder(cart);
@@ -44,7 +44,21 @@
 
             if (response != null && response.IsSuccess)
             {
-                // get stripe session and redirect to stripe to place order
+                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+
+                StripeRequestDto stripeRequestDto = new()
+                {
+                    ApprovedUrl = domain + "cart/Confirmation?orderId=" + orderHeaderDto.OrderHeaderId,
+                    CancelUrl = domain + "cart/checkout",
+                    OrderHeader = orderHeaderDto
+                };
+
+                var stripeResponse = await _orderService.CreateStripeSession(stripeRequestDto);
+                StripeRequestDto stripeResponseResult =
+                    JsonConvert.DeserializeObject<StripeRequestDto>(Convert.ToString(stripeResponse.Result));
+
+                Response.Headers.Add("Location", stripeResponseResult.StripeSessionUrl);
+                return new StatusCodeResult(303);
             }
 
             return View();
@@ -120,7 +134,7 @@
                 CartDto cartDto = JsonConvert.DeserializeObject<CartDto>(Convert.ToString(response.Result));
                 return cartDto;
             }
-            
+
             return new CartDto();
         }
     }

@@ -3,6 +3,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Mango.Services.EmailApi.Data;
+    using Mango.Services.EmailApi.Message;
     using Mango.Services.EmailApi.Models;
     using Mango.Services.EmailApi.Models.Dto;
     using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,12 @@
             message.AppendLine("</ul>");
 
             await LogAndEmail(message.ToString(), cartDto.CartHeader.Email);
+        }
+
+        public async Task LogOrderPlaced(RewardsMessage rewardsDto)
+        {
+            string message = "New Order Placed. <br/> Order ID: " + rewardsDto.OrderId;
+            await LogAndEmail(message, "tencho1011@gmail.com");
         }
 
         public async Task RegisterUserEmailAndLog(string email)

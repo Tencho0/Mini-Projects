@@ -12,5 +12,6 @@
 
         public string AccessToken { get; set; }
 
+        public ContentType ContentType { get; set; } = ContentType.Json;
     }
 }

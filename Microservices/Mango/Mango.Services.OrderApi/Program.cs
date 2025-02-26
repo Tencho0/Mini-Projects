@@ -3,6 +3,7 @@ using Mango.MessageBus;
 using Mango.Services.OrderApi;
 using Mango.Services.OrderApi.Data;
 using Mango.Services.OrderApi.Extensions;
+using Mango.Services.OrderApi.RabbitMQSender;
 using Mango.Services.OrderApi.Service;
 using Mango.Services.OrderApi.Service.IService;
 using Mango.Services.OrderApi.Utility;
@@ -26,7 +27,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<BackendApiAuthenticationHttpClientHandler>();
 
-builder.Services.AddScoped<IMessageBus, MessageBus>();
+builder.Services.AddScoped<IRabbitMQOrderMessageSender, RabbitMQOrderMessageSender>();
+// builder.Services.AddScoped<IMessageBus, MessageBus>();
 
 builder.Services
     .AddHttpClient("Product", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ProductAPI"]))

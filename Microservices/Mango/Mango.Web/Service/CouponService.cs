@@ -46,7 +46,7 @@
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.CouponAPIBase + "/api/coupon/GetByCode" + couponCode
+                Url = SD.CouponAPIBase + "/api/coupon/GetByCode/" + couponCode
             });
         }
 

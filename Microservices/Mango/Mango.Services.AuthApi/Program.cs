@@ -1,4 +1,3 @@
-using Mango.MessageBus;
 using Mango.Services.AuthApi.Data;
 using Mango.Services.AuthApi.Models;
 using Mango.Services.AuthApi.RabbitMQSender;

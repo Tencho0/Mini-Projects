@@ -1,6 +1,5 @@
 ﻿namespace Mango.Services.AuthApi.Controllers
 {
-    using Mango.MessageBus;
     using Mango.Services.AuthApi.Models.Dto;
     using Mango.Services.AuthApi.RabbitMQSender;
     using Mango.Services.AuthApi.Service.IService;

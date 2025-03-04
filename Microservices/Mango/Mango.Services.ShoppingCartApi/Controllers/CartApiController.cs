@@ -1,7 +1,6 @@
 ﻿namespace Mango.Services.ShoppingCartApi.Controllers
 {
     using AutoMapper;
-    using Mango.MessageBus;
     using Mango.Services.ShoppingCartApi.Data;
     using Mango.Services.ShoppingCartApi.Models;
     using Mango.Services.ShoppingCartApi.Models.Dto;

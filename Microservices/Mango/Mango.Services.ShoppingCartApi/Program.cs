@@ -1,5 +1,4 @@
 using AutoMapper;
-using Mango.MessageBus;
 using Mango.Services.ShoppingCartApi;
 using Mango.Services.ShoppingCartApi.Data;
 using Mango.Services.ShoppingCartApi.Extensions;

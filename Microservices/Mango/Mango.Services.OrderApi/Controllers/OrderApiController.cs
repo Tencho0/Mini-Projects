@@ -6,12 +6,12 @@
     using Mango.Services.OrderApi.Models.Dto;
     using Mango.Services.OrderApi.Service.IService;
     using Mango.Services.OrderApi.Utility;
+    using Mango.Services.OrderApi.RabbitMQSender;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Stripe.Checkout;
     using Stripe;
-    using Mango.MessageBus;
     using Microsoft.EntityFrameworkCore;
 
     [Route("api/order")]
@@ -22,10 +22,10 @@
         private IMapper _mapper;
         private readonly AppDbContext _db;
         private IProductService _productService;
-        private readonly IMessageBus _messageBus;
+        private readonly IRabbitMQOrderMessageSender _messageBus;
         private readonly IConfiguration _configuration;
 
-        public OrderApiController(AppDbContext db, IProductService productService, IMapper mapper, IMessageBus messageBus, IConfiguration configuration)
+        public OrderApiController(AppDbContext db, IProductService productService, IMapper mapper, IRabbitMQOrderMessageSender messageBus, IConfiguration configuration)
         {
             _db = db;
             _response = new ResponseDto();
@@ -206,7 +206,7 @@
                         UserId = orderHeader.UserId
                     };
                     string topicName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
-                    await _messageBus.PublishMessage(rewardsDto, topicName);
+                    _messageBus.SendMessage(rewardsDto, topicName);
 
                     _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
                 }

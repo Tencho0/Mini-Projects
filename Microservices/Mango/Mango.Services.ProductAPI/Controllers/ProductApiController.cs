@@ -129,6 +129,15 @@
             try
             {
                 Product obj = _db.Products.First(u => u.ProductId == id);
+                if (!string.IsNullOrEmpty(obj.ImageLocalPath))
+                {
+                    var oldFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), obj.ImageLocalPath);
+                    FileInfo file = new FileInfo(oldFilePathDirectory);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 _db.Products.Remove(obj);
                 _db.SaveChanges();
             }

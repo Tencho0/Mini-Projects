@@ -20,7 +20,6 @@
         private ICouponService _couponService;
         private IConfiguration _configuration;
         private readonly IRabbitMQCartMessageSender _messageBus;
-        //private readonly IMessageBus _messageBus;
 
         public CartApiController(IMapper mapper, AppDbContext db, IProductService productService, ICouponService couponService, IRabbitMQCartMessageSender messageBus, IConfiguration configuration)
         {
@@ -98,7 +97,6 @@
         {
             try
             {
-                // await _messageBus.PublishMessage(cartDto, _configuration.GetValue<string>("TopicAndQueueNames:EmailShoppingCartQueue"));
                 _messageBus.SendMessage(cartDto, _configuration.GetValue<string>("TopicAndQueueNames:EmailShoppingCartQueue"));
                 _response.Result = true;
             }

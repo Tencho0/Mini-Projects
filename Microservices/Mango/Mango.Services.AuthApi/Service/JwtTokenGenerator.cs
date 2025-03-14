@@ -11,6 +11,7 @@
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
         private readonly JwtOptions _jwtOptions;
+
         public JwtTokenGenerator(IOptions<JwtOptions> jwtOptions)
         {
             _jwtOptions = jwtOptions.Value;

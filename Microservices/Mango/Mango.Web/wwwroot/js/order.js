@@ -27,7 +27,14 @@ function loadDataTable(status) {
             { data: 'name', "width": "20%" },
             { data: 'phone', "width": "10%" },
             { data: 'status', "width": "10%" },
-            { data: 'orderTotal', "width": "10%" },
+            {
+                data: 'orderTotal',
+                "width": "10%",
+                "render": function (data, type, row) {
+                    if (!data || isNaN(data)) return "0.00"; // Handles null, undefined, or non-numeric data
+                    return Number(data).toFixed(2); // Ensures rounding works properly
+                }
+            },
             {
                 data: 'orderHeaderId',
                 "render": function (data) {

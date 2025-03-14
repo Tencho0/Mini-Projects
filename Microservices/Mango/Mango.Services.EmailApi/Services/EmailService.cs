@@ -45,7 +45,7 @@
         public async Task RegisterUserEmailAndLog(string email)
         {
             string message = $"User Registeration Successfull. <br/> Email : {email}";
-            await LogAndEmail(message, "tencho101104@gmail.com");
+            await LogAndEmail(message, email);
         }
 
         private async Task<bool> LogAndEmail(string message, string email)

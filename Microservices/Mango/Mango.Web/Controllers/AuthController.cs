@@ -32,7 +32,7 @@
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequestDto obj)
         {
-            ResponseDto responseDto = await _authService.LoginAsync(obj);
+            ResponseDto? responseDto = await _authService.LoginAsync(obj);
 
             if (responseDto != null && responseDto.IsSuccess)
             {

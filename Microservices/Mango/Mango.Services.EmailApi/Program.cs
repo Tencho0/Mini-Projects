@@ -1,5 +1,4 @@
 using Mango.Services.EmailApi.Data;
-using Mango.Services.EmailApi.Extension;
 using Mango.Services.EmailApi.Messaging;
 using Mango.Services.EmailApi.Services;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,6 @@ builder.Services.AddSingleton(new EmailService(optionBuilder.Options));
 builder.Services.AddHostedService<RabbitMQAuthConsumer>();
 builder.Services.AddHostedService<RabbitMQCartConsumer>();
 builder.Services.AddHostedService<RabbitMQOrderConsumer>();
-builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,7 +39,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 ApplyMigration();
-app.UseAzureServiceBusConsumer();
 app.Run();
 
 void ApplyMigration()

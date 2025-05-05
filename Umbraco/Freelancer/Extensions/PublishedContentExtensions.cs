@@ -1,8 +1,5 @@
 ﻿namespace Freelancer.Extensions
 {
-    using Umbraco.Cms.Core.Models.PublishedContent;
-    using Umbraco.Cms.Web.Common.PublishedModels;
-
     public static class PublishedContentExtensions
     {
         public static HomePage? GetHomePage(this IPublishedContent publishedContent)

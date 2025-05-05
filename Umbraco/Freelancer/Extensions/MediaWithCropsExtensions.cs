@@ -1,7 +1,5 @@
 ﻿namespace Freelancer.Extensions
 {
-    using Umbraco.Cms.Core.Models;
-
     public static class MediaWithCropsExtensions
     {
         public static string GetAltText(this MediaWithCrops mediaItem, string altTextAlias = "altText")

@@ -1,39 +1,32 @@
 ﻿using Aspose.Words;
-using Aspose.Words.Replacing;
+using Aspose.Words.Reporting;
+using InvoiceGenerator;
+
+var data = new InvoiceData
+{
+	InvoiceDate = DateTime.Now.ToShortDateString(),
+	InvoiceNumber = "100",
+	CustomerID = "ABC12345",
+	CustomerName = "Anjali Chaturvedi",
+	CustomerCompany = "Extra Frame Photography",
+	CustomerAddress = "89 Pacific Ave\nSan Francisco, CA",
+	CustomerPhone = "123-456-7890",
+	Salesperson = "Oscar Ward",
+	Job = "Sales",
+	PaymentTerms = "Due on receipt",
+	DueDate = "1/30/23",
+	Items = new List<InvoiceItem>
+			{
+				new InvoiceItem { Quantity = 10, Description = "20” x 30” hanging frames", UnitPrice = 15.00M },
+				new InvoiceItem { Quantity = 50, Description = "5” x 7” standing frames", UnitPrice = 5.00M }
+			}
+};
 
 string templatePath = "Templates/InvoiceTemplate.docx";
-var doc = new Document(templatePath);
+Document doc = new Document(templatePath);
+ReportingEngine engine = new ReportingEngine();
+engine.BuildReport(doc, data, "Invoice");
 
-// Define the placeholders and their values
-var replacements = new Dictionary<string, string>
-		{
-			{ "<<InvoiceDate>>", DateTime.Now.ToShortDateString() },
-			{ "<<InvoiceNumber>>", "100" },
-			{ "<<CustomerID>>", "ABC12345" },
-			{ "<<CustomerName>>", "Anjali Chaturvedi" },
-			{ "<<CustomerCompany>>", "Extra Frame Photography" },
-			{ "<<CustomerAddress>>", "89 Pacific Ave\nSan Francisco, CA" },
-			{ "<<CustomerPhone>>", "123-456-7890" },
-			{ "<<Salesperson>>", "Oscar Ward" },
-			{ "<<Job>>", "Sales" },
-			{ "<<PaymentTerms>>", "Due on receipt" },
-			{ "<<DueDate>>", "1/30/23" },
-			{ "<<Qty>>", "10" },
-			{ "<<Description>>", "20” x 30” hanging frames" },
-			{ "<<UnitPrice>>", "15.00" },
-			{ "<<LineTotal>>", "150.00" },
-			{ "<<Subtotal>>", "400.00" },
-			{ "<<SalesTax>>", "20.00" },
-			{ "<<Total>>", "420.00" }
-		};
+doc.Save("Invoice_Filled.docx");
 
-// Replace all placeholders
-foreach (var pair in replacements)
-{
-	doc.Range.Replace(pair.Key, pair.Value, new FindReplaceOptions());
-}
-
-// Save the result
-doc.Save("Invoice_Completed.docx");
-
-Console.WriteLine("Invoice generated successfully.");
+Console.WriteLine("Invoice created using template syntax.");
